@@ -108,7 +108,9 @@ module.exports = function SkipperGridFS(globalOptions) {
             downloadStream.once('end', () => {
                 __transform__.emit('done', client);
             });
-
+            downloadStream.once('error', (error) => {
+                __transform__.emit('error', error, client);
+            });
             downloadStream.pipe(__transform__);
         });
 
